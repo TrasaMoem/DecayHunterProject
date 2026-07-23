@@ -1,0 +1,128 @@
+:root {
+  --col-gap: 4%;
+  --row-gap: 4%;
+  --cube-perspective: 99999999px;
+  --cube-face-border: 1px solid rgba(255, 255, 255, 0.12);
+  --cube-face-bg: #120f17;
+}
+
+.default-animation {
+  position: relative;
+  width: min(100%, 920px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  margin: 0 auto;
+}
+
+.default-animation--scene {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  column-gap: var(--col-gap);
+  row-gap: var(--row-gap);
+  perspective: var(--cube-perspective);
+  grid-auto-rows: 1fr;
+}
+
+.cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+  cursor: none;
+}
+
+.cube--empty {
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.cube--filled {
+  cursor: none;
+}
+
+.cube--filled .cube-face--front {
+  box-shadow: inset 0 0 0 2px var(--cube-accent, transparent);
+}
+
+.cube::before {
+  content: "";
+  position: absolute;
+  top: -36px;
+  right: -36px;
+  bottom: -36px;
+  left: -36px;
+}
+
+.default-animation .cube-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cube-face-bg);
+  border: var(--cube-face-border);
+  opacity: 1;
+  overflow: hidden;
+}
+
+.cube-label {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 10px 6px 7px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0.25),
+    transparent
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.cube-label__name {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #ffffff;
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.9),
+    0 0 6px rgba(56,189,248,0.35);
+
+  line-height: 1.1;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cube-label__sub {
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-align: center;
+  color: #cbd5e1;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 1px 3px rgba(0,0,0,0.9);
+}
+
+.default-animation .cube-face--top,
+.default-animation .cube-face--bottom,
+.default-animation .cube-face--left,
+.default-animation .cube-face--right,
+.default-animation .cube-face--back {
+  display: none;
+}
+
+.default-animation .cube-face--front {
+  transform: translateZ(0);
+}
