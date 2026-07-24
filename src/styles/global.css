@@ -376,3 +376,34 @@ code {
 .table-world-row {
   cursor: pointer;
 }
+.lock-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  perspective: 600px;
+}
+
+
+.lock-preview__image {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+
+  animation: lockRotate 5s linear infinite;
+
+  filter:
+    drop-shadow(0 0 8px rgba(96,165,250,.8));
+}
+
+
+@keyframes lockRotate {
+
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+
+}

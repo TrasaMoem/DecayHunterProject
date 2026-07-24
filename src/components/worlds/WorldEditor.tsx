@@ -9,6 +9,7 @@ import { emptyTraits, type WorldRow, type WorldTraits } from "@/lib/types";
 import { isValidWorldName, normalizeWorldName, worldNameHint } from "@/lib/validation/worldName";
 import { TraitEditor } from "./TraitEditor";
 import type { ObservationInput } from "@/lib/api";
+import { LockPreview } from "./LockPreview";
 
 interface WorldEditorProps {
   initial?: Partial<WorldRow> & { traits?: Partial<WorldTraits> };
@@ -183,6 +184,7 @@ export function WorldEditor({ initial, onSave, onCancel }: WorldEditorProps) {
       <TraitEditor traits={traits} onChange={setTraits} />
 
       <aside className="analysis-panel">
+      <LockPreview lock={inferPrimaryLockFromTraits(traits)} />
         <h3>Live analysis</h3>
         <div className="analysis-kpi">
           <span>{analysis.score}/100</span>
