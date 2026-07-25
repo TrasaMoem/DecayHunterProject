@@ -9,9 +9,11 @@ import {
   type ObservationInput,
 } from "@/lib/api";
 import type { StatsSnapshot, WorldRow, WorldTraits } from "@/lib/types";
+import { traitsFromPartial } from "@/lib/engine/analyze";
 import { WorldsTable } from "@/components/worlds/WorldsTable";
 import { WorldCubesGrid } from "@/components/worlds/WorldCubesGrid";
 import { WorldEditor } from "@/components/worlds/WorldEditor";
+import { QuickAddWizard } from "@/components/worlds/QuickAddWizard";
 import { save, open } from "@tauri-apps/plugin-dialog";
 import { writeTextFile, readTextFile } from "@tauri-apps/plugin-fs";
 import { formatShortDate } from "@/lib/ui";
@@ -155,7 +157,7 @@ function AppShell() {
       spinDuration={4}
       hideDefaultCursor={true}
       parallaxOn={true}
-      ursorColor="#38bdf8"
+      cursorColor="#38bdf8"
       cursorColorOnTarget="#ff6b6b"
       />
 
@@ -251,33 +253,40 @@ function AppShell() {
         <Route path="/stats" element={<StatsView stats={stats} worlds={worlds} />} />
       </Routes>
 
-      {(showAdd || selected) && (
-        <div className="modal-backdrop" onClick={() => { setShowAdd(false); setSelected(null); }}>
+      {showAdd && !selected && (
+        <div className="modal-backdrop" onClick={() => { setShowAdd(false); }}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>{selected ? selected.name : "Quick add world"}</h2>
+              <h2>Quick add world</h2>
+            </div>
+            <QuickAddWizard
+              onSave={handleSave}
+              onCancel={() => setShowAdd(false)}
+            />
+          </div>
+        </div>
+      )}
+      {selected && !showAdd && (
+        <div className="modal-backdrop" onClick={() => setSelected(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{selected.name}</h2>
               <button
                 type="button"
                 className="btn ghost cursor-target"
-                onClick={() => {
-                  setShowAdd(false);
-                  setSelected(null);
-                }}
+                onClick={() => setSelected(null)}
               >
                 Close
               </button>
             </div>
             <WorldEditor
-              initial={showAdd && !selected ? undefined : editorInitial ?? selected ?? undefined}
+              initial={editorInitial ?? selected ?? undefined}
               onSave={handleSave}
-              onCancel={() => {
-                setShowAdd(false);
-                setSelected(null);
-              }}
+              onCancel={() => setSelected(null)}
             />
           </div>
         </div>
-            )}
+      )}
             </div>
           </>
         );

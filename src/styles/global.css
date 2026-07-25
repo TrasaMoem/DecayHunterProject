@@ -407,3 +407,245 @@ code {
   }
 
 }
+
+/* Quick Add Wizard Styles */
+.quick-add-wizard {
+  padding: 0.5rem 0;
+}
+
+.step-indicator {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.step-dot.active {
+  background: linear-gradient(135deg, #5227ff, #7c3aed);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(82, 39, 255, 0.4);
+}
+
+.step-dot.done {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.step-dot.clickable {
+  cursor: pointer;
+}
+
+.step-dot.clickable:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.step-title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: #e2e8f0;
+}
+
+.tag-select-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.tag-chip {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.6);
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tag-chip.active {
+  background: rgba(82, 39, 255, 0.3);
+  border-color: #5227ff;
+  color: #fff;
+}
+
+.tag-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.selected-tags {
+  margin-top: 0.35rem;
+}
+
+.omen-other-worlds {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.form-info {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #22c55e;
+}
+
+.form-info.muted {
+  color: #94a3b8;
+}
+
+.omen-days-input {
+  width: 100px;
+  padding: 0.3rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.9);
+  color: inherit;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.analysis-details {
+  margin: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.analysis-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.analysis-options {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.score-good {
+  color: #22c55e;
+}
+
+.score-mid {
+  color: #fbbf24;
+}
+
+.score-low {
+  color: #ef4444;
+}
+
+.world-editor__grid select {
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.9);
+  color: inherit;
+  font: inherit;
+  appearance: auto;
+}
+
+.tag-chip.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.rarity-with-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rarity-world-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fbbf24;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.analysis-world-header {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.analysis-world-name {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #fbbf24;
+  letter-spacing: 0.05em;
+}
+
+.analysis-world-owner {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+}
+
+.text-warning {
+  color: #fb923c;
+  font-style: italic;
+}
+
+.omen-view-btn {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.omen-worlds-list {
+  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.omen-worlds-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.65rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Nested modal inside quick-add wizard for editing other-worlds */
+.nested-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.72);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 100;
+}
