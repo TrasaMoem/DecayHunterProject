@@ -46,6 +46,14 @@ export interface WorldTraits {
   newItemsPresent: boolean;
   recentChanges: boolean;
   custom: Record<string, boolean>;
+  // Extended fields for wizard form persistence
+  omenForgottenPets?: boolean;
+  omenOldStuff?: boolean;
+  omenOldStuffDays?: string;
+  stuffPrice?: string;
+  rarity?: string;
+  manyPortals?: string;
+  amountOfRates?: string;
 }
 
 export const emptyTraits = (): WorldTraits => ({

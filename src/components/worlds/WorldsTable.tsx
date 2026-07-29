@@ -20,12 +20,25 @@ function matchWorld(world: WorldRow, q: string): boolean {
     world.priorityTier,
     String(world.score),
     String(world.decayProb),
+    String(world.lootProb),
     ...world.tags,
   ]
     .join(" ")
     .toLowerCase();
 
   return hay.includes(q.toLowerCase());
+}
+
+function scoreColor(score: number): string {
+  if (score >= 70) return "#22c55e";
+  if (score >= 40) return "#fbbf24";
+  return "#ef4444";
+}
+
+function lootColor(pct: number): string {
+  if (pct >= 60) return "#22c55e";
+  if (pct >= 30) return "#fbbf24";
+  return "#94a3b8";
 }
 
 export function WorldsTable({
@@ -45,7 +58,9 @@ export function WorldsTable({
             <th>World</th>
             <th>Tier</th>
             <th>Score</th>
+            <th>Stars</th>
             <th>Decay</th>
+            <th>Loot</th>
             <th>Why added</th>
             <th>Last check</th>
             <th>Next check</th>
@@ -56,6 +71,7 @@ export function WorldsTable({
         <tbody>
         {filtered.map((world) => {
   const overdue = isDue(world.nextCheckAt);
+  const stars = starsFromScore(world.score);
 
   return (
     <tr
@@ -95,14 +111,21 @@ export function WorldsTable({
 
       <td>{world.priorityTier}</td>
 
+      <td style={{ color: scoreColor(world.score), fontWeight: 600 }}>
+        {world.score}
+      </td>
+
       <td>
-        {world.score}{" "}
-        <span className="muted small">
-          {starsFromScore(world.score)}
+        <span className="muted small" style={{ fontSize: "1rem", letterSpacing: "0.05em" }}>
+          {stars}
         </span>
       </td>
 
       <td>{world.decayProb}%</td>
+
+      <td style={{ color: lootColor(world.lootProb) }}>
+        {world.lootProb}%
+      </td>
 
       <td className="reason-cell">
         {world.addReason}

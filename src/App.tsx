@@ -271,13 +271,6 @@ function AppShell() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2>{selected.name}</h2>
-              <button
-                type="button"
-                className="btn ghost cursor-target"
-                onClick={() => setSelected(null)}
-              >
-                Close
-              </button>
             </div>
             <WorldEditor
               initial={editorInitial ?? selected ?? undefined}

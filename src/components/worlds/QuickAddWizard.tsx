@@ -355,12 +355,23 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
     }
     t.farmOvergrown = form.omenFarmOvergrown;
 
+    // Persist extended wizard fields
+    t.omenForgottenPets = form.omenForgottenPets;
+    t.omenOldStuff = form.omenOldStuff;
+    t.omenOldStuffDays = form.omenOldStuffDays || undefined;
+    t.stuffPrice = form.stuffPrice;
+    t.rarity = form.rarity;
+    t.manyPortals = form.manyPortals;
+    t.amountOfRates = form.amountOfRates;
+
     return t;
   };
 
   const traits = useMemo(() => buildTraits(), [
     form.newbieLock, form.smallLock, form.worldLock,
     form.omenSemiDestroyedBlocksFarms, form.omenFarmOvergrown,
+    form.omenForgottenPets, form.omenOldStuff, form.omenOldStuffDays,
+    form.stuffPrice, form.rarity, form.manyPortals, form.amountOfRates,
   ]);
 
   const analysis: AnalysisResult = useMemo(() => analyzeTraits(traits), [traits]);
