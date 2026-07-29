@@ -458,6 +458,15 @@ code {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
+.step-dot.skipped {
+  background: rgba(100, 116, 139, 0.15);
+  border-color: rgba(100, 116, 139, 0.3);
+  color: #64748b;
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
 .step-title {
   margin: 0 0 0.75rem;
   font-size: 1rem;

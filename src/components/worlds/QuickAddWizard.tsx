@@ -134,6 +134,9 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
     return false;
   }, [form.worldLock, form.newbieLock, form.smallLock]);
 
+  // Profit of Waiting step should be skipped under the same conditions as omen step
+  const skipProfitStep = skipOmenStep;
+
   // Validate step 3 (lock selection)
   const validateLocks = (): string | null => {
     const { newbieLock, smallLock, worldLock } = form;
@@ -152,6 +155,41 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
 
     return null;
   };
+
+  // Auto-cleanup: when a field becomes hidden due to another field's state,
+  // reset it to "None" so it doesn't cascade and block other fields.
+  useEffect(() => {
+    setForm(prev => {
+      let changed = false;
+      let next = { ...prev };
+
+      // smallLock Decayed → newbieLock hidden → reset to None
+      if (next.smallLock === "Decayed" && next.newbieLock !== "None") {
+        next.newbieLock = "None";
+        changed = true;
+      }
+
+      // worldLock not None → newbieLock hidden → reset to None
+      if (next.worldLock !== "None" && next.newbieLock !== "None") {
+        next.newbieLock = "None";
+        changed = true;
+      }
+
+      // newbieLock not None → worldLock hidden → reset to None
+      if (next.newbieLock !== "None" && next.worldLock !== "None") {
+        next.worldLock = "None";
+        changed = true;
+      }
+
+      // worldLock Decayed → smallLock hidden → reset to None
+      if (next.worldLock === "Decayed" && next.smallLock !== "None") {
+        next.smallLock = "None";
+        changed = true;
+      }
+
+      return changed ? next : prev;
+    });
+  }, [form.newbieLock, form.smallLock, form.worldLock]);
 
   const updateField = <K extends keyof FormData>(key: K, value: FormData[K]) => {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -254,7 +292,8 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
       }
       markStepCompleted(3);
       if (skipOmenStep) {
-        setStep(5);
+        // Both omen and profit steps are skipped
+        setStep(6);
       } else {
         setStep(4);
       }
@@ -263,7 +302,11 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
 
     if (step === 4) {
       markStepCompleted(4);
-      setStep(5);
+      if (skipProfitStep) {
+        setStep(6);
+      } else {
+        setStep(5);
+      }
       return;
     }
 
@@ -1033,7 +1076,9 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
   const stepProgress = () => (
     <div className="step-indicator">
       {[1, 2, 3, 4, 5, 6].map(s => {
-        if (s === 4 && skipOmenStep) return null;
+        if (s === 4 && skipOmenStep) return <div key={s} className="step-dot skipped">4</div>;
+        if (s === 5 && skipProfitStep && !skipOmenStep) return <div key={s} className="step-dot skipped">5</div>;
+        if (s === 5 && skipOmenStep) return <div key={s} className="step-dot skipped">5</div>;
         const isAccessible = canNavigateToStep(s);
         const isCompleted = completedSteps.has(s);
         return (
@@ -1045,7 +1090,7 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
             {s}
           </div>
         );
-      }).filter(Boolean)}
+      })}
     </div>
   );
 
@@ -1056,7 +1101,7 @@ export function QuickAddWizard({ onSave, onCancel }: QuickAddWizardProps) {
       {step === 2 && renderStep2()}
       {step === 3 && renderStep3()}
       {step === 4 && !skipOmenStep && renderStep4()}
-      {step === 5 && renderStep5()}
+      {step === 5 && !skipProfitStep && renderStep5()}
       {step === 6 && renderStep6()}
 
       {/* Nested editor modal for viewing a world from the other-worlds table */}
